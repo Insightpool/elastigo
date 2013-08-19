@@ -32,7 +32,6 @@ func MGet(pretty bool, index string, _type string, req string) (MGetResponseCont
 			return retval, jsonErr
 		}
 	}
-	fmt.Println(body)
 	return retval, err
 }
 
