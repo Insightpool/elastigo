@@ -1,8 +1,19 @@
+// Copyright 2013 Matthew Baird
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//     http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package api
 
 import (
-  "fmt"
-) 
+	"fmt"
+)
 
 type BaseResponse struct {
 	Ok      bool        `json:"ok"`
@@ -14,7 +25,10 @@ type BaseResponse struct {
 	Found   bool        `json:"found,omitempty"`
 	Exists  bool        `json:"exists,omitempty"`
 }
-
+type ExtendedStatus struct {
+	Ok           bool   `json:"ok"`
+	ShardsStatus Status `json:"_shards"`
+}
 type Status struct {
 	Total      int `json:"total"`
 	Successful int `json:"successful"`
@@ -41,21 +55,20 @@ func Pretty(pretty bool) string {
 	return prettyString
 }
 
-
 // http://www.elasticsearch.org/guide/reference/api/search/search-type/
 
 func Scan(scan int) string {
-    scanString := ""
-    if scan > 0 {
-      scanString = fmt.Sprintf("&search_type=scan&size=%v",scan)
-    }
-    return scanString
+	scanString := ""
+	if scan > 0 {
+		scanString = fmt.Sprintf("&search_type=scan&size=%v", scan)
+	}
+	return scanString
 }
 
 func Scroll(duration string) string {
-    scrollString := ""
-    if duration != "" {
-        scrollString = "&scroll="+duration
-    }
-    return scrollString
+	scrollString := ""
+	if duration != "" {
+		scrollString = "&scroll=" + duration
+	}
+	return scrollString
 }

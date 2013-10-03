@@ -1,12 +1,23 @@
+// Copyright 2013 Matthew Baird
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//     http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package api
 
 import (
 	//"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"log"
+	"time"
 )
 
 func DoCommand(method string, url string, data interface{}) ([]byte, error) {
@@ -46,7 +57,7 @@ func DoCommand(method string, url string, data interface{}) ([]byte, error) {
 		if jsonErr == nil {
 			if error, ok := response["error"]; ok {
 				status, _ := response["status"]
-				return body, errors.New(fmt.Sprintf("Error [%s] Status [%v]", error, status))
+				return body, ESError{time.Now(), fmt.Sprintf("Error [%s] Status [%v]", error, status), httpStatusCode}
 			}
 		}
 		return body, jsonErr
@@ -54,7 +65,18 @@ func DoCommand(method string, url string, data interface{}) ([]byte, error) {
 	return body, nil
 }
 
-// The API also allows to check for the existance of a document using HEAD
+// ESError is an error implementation that includes a time, message, and code.
+type ESError struct {
+	When time.Time
+	What string
+	Code int
+}
+
+func (e ESError) Error() string {
+	return fmt.Sprintf("%v: %v [%v]", e.When, e.What, e.Code)
+}
+
+// Exists allows the caller to check for the existance of a document using HEAD
 // This appears to be broken in the current version of elasticsearch 0.19.10, currently
 // returning nothing
 func Exists(pretty bool, index string, _type string, id string) (BaseResponse, error) {
