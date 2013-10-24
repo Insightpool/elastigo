@@ -75,5 +75,5 @@ func Exists(pretty bool, index string, _type string, id string) (bool, error) {
 		return true, err
 	}
 	
-	return false, err
+	return true, err
 }
