@@ -14,8 +14,8 @@ package search
 import (
 	"flag"
 	"github.com/araddon/gou"
-	"github.com/mattbaird/elastigo/api"
-	"github.com/mattbaird/elastigo/core"
+	"github.com/Insightpool/elastigo/api"
+	"github.com/Insightpool/elastigo/core"
 	"log"
 	"os"
 	//"testing"

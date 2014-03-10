@@ -15,7 +15,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/mattbaird/elastigo/api"
+	"github.com/Insightpool/elastigo/api"
 	"net/url"
 	"strings"
 )

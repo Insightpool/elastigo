@@ -14,7 +14,7 @@ package core
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/mattbaird/elastigo/api"
+	"github.com/Insightpool/elastigo/api"
 	"net/url"
 	"strconv"
 )

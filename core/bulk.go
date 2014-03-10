@@ -15,7 +15,7 @@ import (
 	"bytes"
 	"encoding/json"
 	u "github.com/araddon/gou"
-	"github.com/mattbaird/elastigo/api"
+	"github.com/Insightpool/elastigo/api"
 	"io"
 	"log"
 	"strconv"
